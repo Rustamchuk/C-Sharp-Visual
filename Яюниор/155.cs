@@ -10,60 +10,48 @@ namespace Яюниор
         {
             List<int> numbers = new List<int>();
             int number = 0;
-            bool exit = false;
+            bool playing = true;
             string userInput;
 
             Console.WriteLine("Здравствуйте! Дальше я буду просить вас вводить числа до тех пор, пока вы не напишите:\n" +
                 "sum - суммирование всех чисел\n" +
                 "exit - выход\n");
-            Console.WriteLine("Нажмие любую клавишу...");
-            Console.ReadKey();
-            Console.Clear();
-            while (exit == false)
+
+            while (playing)
             {
                 Console.WriteLine("Введите " + (number += 1) + " число.");
                 userInput = Console.ReadLine();
 
-                exit = Manager(userInput, ref numbers);
+                switch (userInput)
+                {
+                    case "sum":
+                        Sum(numbers);
+                        break;
+                    case "exit":
+                        playing = false;
+                        break;
+                    default:
+                        AddNumber(ref numbers, userInput);
+                        break;
+                }
             }
         }
 
-        static bool Manager(string command, ref List<int> numbers)
-        {
-            if (command == "exit")
-            {
-                return Exit();
-            }
-            else if (command == "sum")
-            {
-                Sum(ref numbers);
-                return false;
-            }
-            else
-            {
-                AddNumber(ref numbers, command);
-                return false;
-            }
-        }
-
-        static void Sum(ref List<int> numbers)
+        static void Sum(List<int> numbers)
         {
             int sum = 0;
             for (int i = 0; i < numbers.Count; i++)
             {
                 sum += numbers[i];
             }
+
             Console.WriteLine("Сумма равняется " + sum);
         }
 
-        static bool Exit()
+        static void AddNumber(ref List<int> numbers, string userAnswer)
         {
-            return true;
-        }
-
-        static void AddNumber(ref List<int> numbers, string number)
-        {
-            numbers.Add(Convert.ToInt32(number));
+            int.TryParse(userAnswer, out int number);
+            numbers.Add(number);
         }
     }
 }
