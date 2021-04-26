@@ -19,38 +19,13 @@ namespace Яюниор
 
         static void Shufle(ref int[] array)
         {
-            List<int> usedNumbers = new List<int>();
-            int[] newArray = new int[array.Length];
-
             for (int i = 0; i < array.Length; i++)
             {
-                int number = GetRandom(ref usedNumbers, array.Length);
-
-                newArray[i] = array[number];
+                int key = array[i];
+                int rand = new Random().Next(array.Length);
+                array[i] = array[rand];
+                array[rand] = key;
             }
-            array = newArray;
-        }
-
-        static int GetRandom(ref List<int> used, int len)
-        {
-            int number = 0;
-            bool isWrong = true;
-
-            while (isWrong)
-            {
-                number = new Random().Next(len);
-
-                if (used.Contains(number))
-                {
-                    continue;
-                }
-
-                used.Add(number);
-
-                isWrong = false;
-            }
-
-            return number;
         }
 
         static void ShowArray(int[] array)
