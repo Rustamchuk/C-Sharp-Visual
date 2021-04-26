@@ -40,14 +40,14 @@ namespace Яюниор
             {
                 DrawMap(map);
 
-                SpawnHero(userX, userY, hero);
+                DrawHero(userX, userY, hero);
                 MoveHero(ref userX, ref userY, map);
 
                 Console.Clear();
             }
         }
 
-        static void SpawnHero(int x, int y, char hero)
+        static void DrawHero(int x, int y, char hero)
         {
             Console.SetCursorPosition(x, y);
             Console.Write(hero);
@@ -58,29 +58,27 @@ namespace Яюниор
             switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.W:
-                    if (CheckPosition(x, y - 1, map))
+                    if (CheckFreeCell(x, y - 1, map))
                         y--;
                     break;
                 case ConsoleKey.S:
-                    if (CheckPosition(x, y + 1, map))
+                    if (CheckFreeCell(x, y + 1, map))
                         y++;
                     break;
                 case ConsoleKey.A:
-                    if (CheckPosition(x - 1, y, map))
+                    if (CheckFreeCell(x - 1, y, map))
                         x--;
                     break;
                 case ConsoleKey.D:
-                    if (CheckPosition(x + 1, y, map))
+                    if (CheckFreeCell(x + 1, y, map))
                         x++;
                     break;
             }
         }
 
-        static bool CheckPosition(int x, int y, char[,] map)
+        static bool CheckFreeCell(int x, int y, char[,] map)
         {
-            if (map[y, x] == '#')
-                return false;
-            return true;
+            return map[y, x] != '#';
         }
 
         static void DrawMap(char[,] map)
