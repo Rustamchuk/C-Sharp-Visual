@@ -31,7 +31,7 @@ namespace Яюниор
                         playing = false;
                         break;
                     default:
-                        AddNumber(ref numbers, userInput);
+                        AddNumber(numbers, userInput);
                         break;
                 }
             }
@@ -48,10 +48,10 @@ namespace Яюниор
             Console.WriteLine("Сумма равняется " + sum);
         }
 
-        static void AddNumber(ref List<int> numbers, string userAnswer)
+        static void AddNumber(List<int> numbers, string userAnswer)
         {
-            int.TryParse(userAnswer, out int number);
-            numbers.Add(number);
+            if (int.TryParse(userAnswer, out int number))
+                numbers.Add(number);
         }
     }
 }
