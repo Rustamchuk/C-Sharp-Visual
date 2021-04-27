@@ -8,31 +8,33 @@ namespace Яюниор
     {
         static void Main(string[] args)
         {
-            int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+            int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
-            ShowArray(array);
+            ShowArray(numbers);
 
-            Shufle(ref array);
+            Shufle(numbers);
 
-            ShowArray(array);
+            ShowArray(numbers);
         }
 
-        static void Shufle(ref int[] array)
+        static void Shufle(int[] numbers)
         {
-            for (int i = 0; i < array.Length; i++)
+            Random rand = new Random();
+
+            for (int i = 0; i < numbers.Length; i++)
             {
-                int key = array[i];
-                int rand = new Random().Next(array.Length);
-                array[i] = array[rand];
-                array[rand] = key;
+                int key = numbers[i];
+                int position = rand.Next(numbers.Length);
+                numbers[i] = numbers[position];
+                numbers[position] = key;
             }
         }
 
-        static void ShowArray(int[] array)
+        static void ShowArray(int[] numbers)
         {
-            foreach (var item in array)
+            foreach (var number in numbers)
             {
-                Console.Write(item + " ");
+                Console.Write(number + " ");
             }
             Console.WriteLine();
         }
