@@ -16,12 +16,12 @@ namespace Яюниор
             List<DamageKind> damages = new List<DamageKind> { engine, wheel, window, lamp, chair};
 
             bool isopen = true;
-            Random randDamage = new Random();
+            Random random = new Random();
             CarService service = new CarService();
 
             while (isopen)
             {
-                Car car = new Car(damages[randDamage.Next(damages.Count)]);
+                Car car = new Car(damages[random.Next(damages.Count)]);
 
                 car.ShowCar();
 
@@ -38,41 +38,44 @@ namespace Яюниор
         private Dictionary<string, int> _chest = new Dictionary<string, int> { { "engine", 40000}, { "wheel", 20000}, { "window", 30000}, { "lamp", 15000}, { "chair", 10000 } };
         private int _money = 150000;
         private bool _isOpen = true;
+        private int _reward;
+        private int _fine;
+        private string _answer;
         
         public void WorkService(Car car)
         {
+            _reward = TakeCost(car) * 2;
+            _fine = TakeCost(car);
+
             if (_money <= 0 || _isOpen == false)
             {
                 Console.WriteLine("No Money!");
                 return;
             }
 
-            int fine = TakeCost(car);
-            int reward = TakeCost(car) * 2;
-
             Console.WriteLine($"Purse - {_money}\n\n");
 
-            if (fine == 0)
+            if (_fine == 0)
             {
                 Console.WriteLine("У вас нет нужной запчасти...");
-                fine = 10000;
-                Console.WriteLine($"-{fine}");
-                _money -= fine;
+                _fine = 10000;
+                Console.WriteLine($"-{_fine}");
+                _money -= _fine;
             }
             else
             {
-                Console.WriteLine($"Reward - {reward}");
-                Console.WriteLine($"Fine for wrong - {fine}\n");
+                Console.WriteLine($"Reward - {_reward}");
+                Console.WriteLine($"Fine for wrong - {_fine}\n");
 
                 if (FixCar(car))
                 {
-                    Console.WriteLine($"+{reward}");
-                    _money += reward;
+                    Console.WriteLine($"+{_reward}");
+                    _money += _reward;
                 }
                 else
                 {
-                    Console.WriteLine($"-{fine}");
-                    _money -= fine;
+                    Console.WriteLine($"-{_fine}");
+                    _money -= _fine;
                 }
             }
         }
@@ -87,9 +90,9 @@ namespace Яюниор
             }
             Console.WriteLine();
 
-            string answer = Console.ReadLine();
+            _answer = Console.ReadLine();
 
-            if (answer == car.CurrentDamage.Name)
+            if (_answer == car.CurrentDamage.Name)
             {
                 for (int i = 1; i < 4; i++)
                 {
@@ -102,7 +105,7 @@ namespace Яюниор
                     Console.Write(".");
                     System.Threading.Thread.Sleep(70);
                 }
-                _chest.Remove(answer);
+                _chest.Remove(_answer);
                 Console.WriteLine("Success!");
 
                 return true;
@@ -116,11 +119,8 @@ namespace Яюниор
 
         private int TakeCost(Car car)
         {
-            foreach (var detail in _chest)
-            {
-                if (detail.Key == car.CurrentDamage.Name)
-                    return detail.Value;
-            }
+            if (_chest.ContainsKey(car.CurrentDamage.Name))
+                return _chest[car.CurrentDamage.Name];
             return 0;
         }
     }
