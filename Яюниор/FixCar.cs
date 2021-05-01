@@ -67,7 +67,7 @@ namespace Яюниор
                 Console.WriteLine($"Reward - {_reward}");
                 Console.WriteLine($"Fine for wrong - {_fine}\n");
 
-                if (FixCar(car))
+                if (TryFixCar(car))
                 {
                     Console.WriteLine($"+{_reward}");
                     _money += _reward;
@@ -80,7 +80,7 @@ namespace Яюниор
             }
         }
 
-        private bool FixCar(Car car)
+        private bool TryFixCar(Car car)
         {
             Console.WriteLine($"Write name of detail");
 
