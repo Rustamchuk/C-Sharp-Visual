@@ -31,13 +31,13 @@ namespace Яюниор
                         gamerDataBase.AddGamer(gamer);
                         break;
                     case "2":
-                        place = GetPlace(place);
+                        place = GetPlace();
                         gamerDataBase.BanGamer(place);
 
                         Console.WriteLine();
                         break;
                     case "3":
-                        place = GetPlace(place);
+                        place = GetPlace();
                         gamerDataBase.UnlockGamer(place);
 
                         Console.WriteLine();
@@ -46,7 +46,7 @@ namespace Яюниор
                         gamerDataBase.ShowGamers();
                         break;
                     case "5":
-                        place = GetPlace(place);
+                        place = GetPlace();
                         gamerDataBase.KickGamer(place);
 
                         Console.WriteLine();
@@ -56,8 +56,9 @@ namespace Яюниор
             }
         }
 
-        static int GetPlace(int place)
+        static int GetPlace()
         {
+            int place;
             Console.Write("Number - ");
 
             Int32.TryParse(Console.ReadLine(), out place);
@@ -68,6 +69,7 @@ namespace Яюниор
     class GamersData
     {
         private List<Gamer> _gamerList = new List<Gamer>();
+        private int _position;
 
         public void AddGamer(Gamer gamer)
         {
@@ -76,20 +78,20 @@ namespace Яюниор
 
         public void BanGamer(int number)
         {
-            number = FindNumber(number);
-            _gamerList[number].Ban();
+            _position = FindNumber(number);
+            _gamerList[_position].Ban();
         }
 
         public void UnlockGamer(int number)
         {
-            number = FindNumber(number);
-            _gamerList[number].Unban();
+            _position = FindNumber(number);
+            _gamerList[_position].Unban();
         }
 
         public void KickGamer(int number)
         {
-            number = FindNumber(number);
-            _gamerList.Remove(_gamerList[number]);
+            _position = FindNumber(number);
+            _gamerList.Remove(_gamerList[_position]);
         }
 
         public void ShowGamers()
