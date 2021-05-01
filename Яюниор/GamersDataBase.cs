@@ -8,7 +8,7 @@ namespace Яюниор
     {
         static void Main(string[] args)
         {
-            GamersControl gamerDataBase = new GamersControl();
+            GamersData gamerDataBase = new GamersData();
             int level;
             int number = 1;
             string nick;
@@ -31,13 +31,13 @@ namespace Яюниор
                         gamerDataBase.AddGamer(gamer);
                         break;
                     case "2":
-                        GetPlace(ref place);
+                        place = GetPlace(place);
                         gamerDataBase.BanGamer(place);
 
                         Console.WriteLine();
                         break;
                     case "3":
-                        GetPlace(ref place);
+                        place = GetPlace(place);
                         gamerDataBase.UnlockGamer(place);
 
                         Console.WriteLine();
@@ -46,7 +46,7 @@ namespace Яюниор
                         gamerDataBase.ShowGamers();
                         break;
                     case "5":
-                        GetPlace(ref place);
+                        place = GetPlace(place);
                         gamerDataBase.KickGamer(place);
 
                         Console.WriteLine();
@@ -56,15 +56,16 @@ namespace Яюниор
             }
         }
 
-        static void GetPlace(ref int place)
+        static int GetPlace(int place)
         {
             Console.Write("Number - ");
 
             Int32.TryParse(Console.ReadLine(), out place);
+            return place;
         }
     }
 
-    class GamersControl
+    class GamersData
     {
         private List<Gamer> _gamerList = new List<Gamer>();
 
@@ -76,13 +77,13 @@ namespace Яюниор
         public void BanGamer(int number)
         {
             number = FindNumber(number);
-            _gamerList[number].ChangeLegal(false);
+            _gamerList[number].Ban();
         }
 
         public void UnlockGamer(int number)
         {
             number = FindNumber(number);
-            _gamerList[number].ChangeLegal(true);
+            _gamerList[number].Unban();
         }
 
         public void KickGamer(int number)
@@ -125,9 +126,14 @@ namespace Яюниор
             Legal = true;
         }
 
-        public void ChangeLegal(bool legal)
+        public void Ban()
         {
-            Legal = legal;
+            Legal = false;
+        }
+        
+        public void Unban()
+        {
+            Legal = true;
         }
     }
 }
