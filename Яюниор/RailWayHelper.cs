@@ -50,7 +50,7 @@ namespace Яюниор
 
         public void FillTrain()
         {
-            _passengers = _random.Next(1, 101);
+            _passengers = _random.Next(1, 81);
 
             if (_passengers % _carriageKind.Capacity == 0)
                 _carriageCount = _passengers / _carriageKind.Capacity;
@@ -69,12 +69,12 @@ namespace Яюниор
             {
                 if (carriage.Capacity <= _distribution)
                 {
-                    carriage.FillCarriage(carriage.Capacity);
+                    carriage.Fill(carriage.Capacity);
                     _distribution -= carriage.Capacity;
                 }
                 else
                 {
-                    carriage.FillCarriage(_distribution);
+                    carriage.Fill(_distribution);
                     _distribution = 0;
                 }
             }
@@ -94,7 +94,7 @@ namespace Яюниор
             Console.SetCursorPosition(100, 2);
             foreach (var carriage in _carriages)
             {
-                carriage.DrawCarriage();
+                carriage.Draw();
                 Console.SetCursorPosition(Console.CursorLeft - 12, 2);
             }
             Console.WriteLine();
@@ -115,7 +115,7 @@ namespace Яюниор
             Capacity = capacity;
         }
 
-        public void FillCarriage(int passengers)
+        public void Fill(int passengers)
         {
             Passengers = passengers;
             _carriage = new List<string>
@@ -126,7 +126,7 @@ namespace Яюниор
             };
         }
 
-        public void DrawCarriage()
+        public void Draw()
         {
             _cursorX = Console.CursorLeft;
 
