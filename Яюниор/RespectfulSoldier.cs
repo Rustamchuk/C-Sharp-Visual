@@ -16,11 +16,11 @@ namespace Яюниор
                 new Soldier("Vova", "president", "bomb", 99),
                 new Soldier("Sergey", "lieutenant-colonel", "gun", 9) };
 
-            var filteredSoldiers = soldiers.Select(soldier => soldier.Name + "-" + soldier.Title);
+            var soldierAndTitle = soldiers.Select(soldier => new { Name = soldier.Name, Title = soldier.Title});
 
-            foreach (var soldier in filteredSoldiers)
+            foreach (var soldier in soldierAndTitle)
             {
-                Console.WriteLine(soldier);
+                Console.WriteLine(soldier.Name + " - " + soldier.Title);
             }
         }
     }
