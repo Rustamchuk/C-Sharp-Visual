@@ -20,7 +20,7 @@ namespace Яюниор
 
             ShowCriminals(criminals);
 
-            criminals = criminals.OrderBy(criminals => criminals.Reason).TakeWhile(criminals => criminals.Reason != "political").Union(criminals.OrderByDescending(criminals => criminals.Reason).TakeWhile(criminals => criminals.Reason != "political")).ToList<Criminal>();
+            criminals = criminals.Where(criminals => criminals.Reason != "political").ToList<Criminal>();
 
             ShowCriminals(criminals);
         }
