@@ -21,39 +21,42 @@ namespace Яюниор
                 new Patient("Vitya", 65, "cancer"),
                 new Patient("Senya", 47, "tuberculosis") };
 
-            while (true)
+            bool open = true;
+
+            while (open)
             {
                 Console.WriteLine("1 - отсортировать по имени\n" +
                     "2 - отсортировать по возрасту\n" +
                     "3 - найти по болезни");
 
-                switch (Convert.ToInt32(Console.ReadLine()))
+                switch (Console.ReadLine())
                 {
-                    case 1:
-                        var filtered1 = patients.OrderBy(patient => patient.Name);
-                        foreach (var patient in filtered1)
-                        {
-                            Console.WriteLine(patient.Name + " " + patient.Ill + " " + patient.Age);
-                        }
+                    case "1":
+                        var patiantsByName = patients.OrderBy(patient => patient.Name);
+                        ShowPatiants(patiantsByName);
                         break;
-                    case 2:
-                        var filtered2 = patients.OrderBy(patient => patient.Age);
-                        foreach (var patient in filtered2)
-                            Console.WriteLine(patient.Name + " " + patient.Ill + " " + patient.Age);
+                    case "2":
+                        var patiantsByAge = patients.OrderBy(patient => patient.Age);
+                        ShowPatiants(patiantsByAge);
                         break;
-                    case 3:
+                    case "3":
                         Console.WriteLine("Введите болезнь");
-
                         string userAnswer = Console.ReadLine();
-                        var filtered3 = patients.Where(patient => patient.Ill == userAnswer);
-                        foreach (var patient in filtered3)
-                            Console.WriteLine(patient.Name + " " + patient.Ill + " " + patient.Age);
+
+                        var patiantsWithIll = patients.Where(patient => patient.Ill == userAnswer);
+                        ShowPatiants(patiantsWithIll);
                         break;
                 }
 
                 Console.ReadKey();
                 Console.Clear();
             }
+        }
+
+        static void ShowPatiants(IEnumerable<Patient> patiants)
+        {
+            foreach (var patient in patiants)
+                Console.WriteLine(patient.Name + " " + patient.Ill + " " + patient.Age);
         }
     }
 
